@@ -88,14 +88,14 @@ class PreProcessing:
         # find matrix dimensions
         user_size = int(max(rating_data[:, 0]) + 1)
         movie_size = int(max(rating_data[:, 1]) + 1)
-        # build data matrices
+        # build data matrices (in coo format)
         matrix_train = sparse.coo_matrix((train_rating, (train_movie, train_user)),
                                          shape=(movie_size, user_size), dtype=np.float64)
         matrix_test = sparse.coo_matrix((test_rating, (test_movie, test_user)),
                                         shape=(movie_size, user_size), dtype=np.float64)
         print('done in {} seconds'.format(time.time() - time_start))
         # save split data to npz file
-        self.__save_data_matrix_npz__(matrix_train, matrix_test, suffix='_rand' if random else '_arb')
+        self.__save_data_matrix_npz__(matrix_train, matrix_test)
 
     def __load_csv_ndarray__(self, csv_path):
         print('loading remapped data', end='    ')
